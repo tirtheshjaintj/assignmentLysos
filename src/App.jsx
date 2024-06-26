@@ -5,7 +5,6 @@ import Cart from './components/Cart';
 import Invoice from './components/Invoice';
 import { SunIcon, MoonIcon } from '@heroicons/react/solid'; // Correct path for heroicons
 import './index.css';
-
 const categories = [
     { id: 1, name: 'Pizza Box', unit: 'boxes' },
     { id: 2, name: 'Cup', unit: 'leads' },
@@ -44,14 +43,27 @@ function App() {
     };
 
     const addToCart = (product, quantity) => {
-        const item = {
-            ...product,
-            quantity,
-            unit: selectedCategory.unit, // Include the unit
-            totalPrice: product.price * quantity,
-        };
-        localStorage.setItem("cart",JSON.stringify([...cart,item]));
-        setCart([...cart, item]);
+        const existingItem = cart.find(item => item.id === product.id);
+    
+        if (existingItem) {
+            // If the item already exists in the cart, update its quantity
+            const updatedCart = cart.map(item =>
+                item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+            );
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+            setCart(updatedCart);
+        } else {
+            // If the item doesn't exist in the cart, add it
+            const newItem = {
+                ...product,
+                quantity,
+                unit: selectedCategory.unit,
+                totalPrice: product.price * quantity,
+            };
+            const updatedCart = [...cart, newItem];
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+            setCart(updatedCart);
+        }
     };
 
     const toggleDarkMode = () => {
