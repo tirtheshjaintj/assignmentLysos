@@ -48,7 +48,7 @@ function App() {
         if (existingItem) {
             // If the item already exists in the cart, update its quantity
             const updatedCart = cart.map(item =>
-                item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+                item.id === product.id ? { ...item, quantity: item.quantity + quantity ,totalPrice:item.price*(item.quantity + quantity)} : item
             );
             localStorage.setItem("cart", JSON.stringify(updatedCart));
             setCart(updatedCart);
