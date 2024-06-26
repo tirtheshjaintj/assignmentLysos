@@ -7,13 +7,14 @@ function Cart({ cart ,setCart}) {
 const handleRemoveFromCart=(i)=>{
 const newCart=cart.filter((item,index)=>index!=i);
 setCart(newCart);
+localStorage.setItem("cart",JSON.stringify(newCart));
 }
     return (
         <div className="mb-4">
             <h2 className="text-xl font-semibold mb-2">Cart</h2>
             <div className="grid grid-cols-1 gap-4">
                 {cart.map((item,i) => (
-                    <div key={item.id} className="p-4 border rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div key={i} className="p-4 border rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
                         <div className="flex justify-between items-center">
                             <div>
                                 <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">

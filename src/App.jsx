@@ -50,6 +50,7 @@ function App() {
             unit: selectedCategory.unit, // Include the unit
             totalPrice: product.price * quantity,
         };
+        localStorage.setItem("cart",JSON.stringify([...cart,item]));
         setCart([...cart, item]);
     };
 
@@ -57,9 +58,14 @@ function App() {
         setDarkMode(!darkMode);
     };
 
-    useEffect( ()=>{
-     console.log(cart);
-    },[cart]);
+    useEffect(()=>{
+        if(!localStorage.getItem("cart")){
+           localStorage.setItem("cart",[]);
+        }
+        else{
+           setCart(JSON.parse(localStorage.getItem("cart")));
+        }
+    },[]);
 
     return (
         <div className={darkMode ? "dark" : ""}>
